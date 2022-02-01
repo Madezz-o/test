@@ -1,83 +1,49 @@
-
-
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
+
+import java.util.stream.Stream;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 
 /**
- * 
+ * @author Yo
+ *
  */
-
-/**
- * @author test
- * 
- */
+@RunWith(Parameterized.class)
 class CalculsTest {
 
-	private Calculs c1 = null;
-	private Calculs c2 = null;
-	private Calculs c3 = null;
-	
-	/**
-	 * Initialise les valeurs avant chaque test 
-	 */
-	@BeforeEach // Déclencher cette méthode avant l'ex�cution
-	void setUp() throws Exception 
+	@Test
+	void test() 
 	{
-		c1 = new Calculs(1,2);
-		c2 = new Calculs(10,20);
-		c3 = new Calculs(100,200);
-	}
-
-	
-
-	/**
-	 * Test method for {@link Calculs#multiplier()}.
-	 */
-	@Test
-	void testMultiplier() 
-	{
-		if (c1.multiplier() != 2)
-		{
-			fail("Methode multiplier non conforme 2*1=2 ne fonctionne pas.");
-		}
-		if (c2.multiplier() != 200)
-		{
-			fail("Methode multiplier non conforme 10*20=200 ne fonctionne pas.");			
-		}
-		if (c3.multiplier() != 20000)
-		{
-			fail("Methode multiplier non conforme 100*200=20000 ne fonctionne pas.");			
-		}
-
-		
-		// Est ce que (2 == 42) ? non donc : test en Erreur
-		assertEquals(c1.multiplier(), 2, "Methode multiplier non conforme 2*1=2 ne fonctionne pas.");
-
-	}
-
-	/**
-	 * Test method for {@link Calculs#additionner()}.
-	 */
-	@Test
-	void testAdditionner() {
-	}
-
-	/**
-	 * Test method for {@link Calculs#diviser()}.
-	 */
-	@Test
-	void testDiviser() {
 		fail("Not yet implemented");
 	}
 
-	/**
-	 * Test method for {@link Calculs#soustraire()}.
-	 */
-	@Test
-	void testSoustraire() {
-		fail("Not yet implemented");
+	// Fournisseur de données
+    static Stream<Arguments> chargerJeuDeTest() throws Throwable 
+    {
+        return Stream.of(
+            Arguments.of(2,2,4), // appellera : testMultiplier(2,2,4)
+            Arguments.of(6,6,36),
+            Arguments.of(3,2,3)
+        );
+    }
+
+	@ParameterizedTest(name="Multiplication numéro {index}: nombre1={0}, nombre2={1}, résultat attendu = {2}")
+	@MethodSource("chargerJeuDeTest")
+	void testMultiplier(int firstNumber, int secondNumber, int expectedResult) 
+	{
+		// Partie paramétrée
+	        Calculs monCal = new Calculs(firstNumber, secondNumber);
+	        assertEquals(expectedResult, monCal.multiplier(), "test en échec pour " + firstNumber + " * " + secondNumber + " != " + expectedResult); 
+
+	    // Partie indépendante (les paramètres peuvent ne servir qu'à une sous partie des tests)
+	        String n = null;
+	        assertNull(n);
 	}
 
 }
