@@ -10,40 +10,47 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
-/**
- * @author Yo
- *
- */
 @RunWith(Parameterized.class)
 class CalculsTest {
 
-	@Test
-	void test() 
-	{
-		fail("Not yet implemented");
-	}
-
 	// Fournisseur de données
-    static Stream<Arguments> chargerJeuDeTest() throws Throwable 
+    static Stream<Arguments> chargerJeuDeTestMultiplication() throws Throwable 
     {
         return Stream.of(
             Arguments.of(2,2,4), // appellera : testMultiplier(2,2,4)
             Arguments.of(6,6,36),
-            Arguments.of(3,2,3)
+            Arguments.of(3,2,6)
         );
     }
+    
+    static Stream<Arguments> chargerJeuDeTestAdditions() throws Throwable 
+    {
+        return Stream.of(
+            Arguments.of(2,2,4),
+            Arguments.of(6,6,12),
+            Arguments.of(3,2,5)
+        );
+    }
+    
+    
+    
+	@ParameterizedTest(name="Additionner numéro {index}: nombre1={0}, nombre2={1}, résultat attendu = {2}")
+	@MethodSource("chargerJeuDeTestAdditions")
+	void testAdditionner(int firstNumber, int secondNumber, int expectedResult) 
+	{
+	        Calculs monCal = new Calculs(firstNumber, secondNumber);
+	        assertEquals(expectedResult, monCal.additionner(), "test en échec pour " + firstNumber + " + " + secondNumber + " != " + expectedResult); 
+	}
+	
+	
+	
 
 	@ParameterizedTest(name="Multiplication numéro {index}: nombre1={0}, nombre2={1}, résultat attendu = {2}")
-	@MethodSource("chargerJeuDeTest")
+	@MethodSource("chargerJeuDeTestMultiplication")
 	void testMultiplier(int firstNumber, int secondNumber, int expectedResult) 
 	{
-		// Partie paramétrée
 	        Calculs monCal = new Calculs(firstNumber, secondNumber);
 	        assertEquals(expectedResult, monCal.multiplier(), "test en échec pour " + firstNumber + " * " + secondNumber + " != " + expectedResult); 
-
-	    // Partie indépendante (les paramètres peuvent ne servir qu'à une sous partie des tests)
-	        String n = null;
-	        assertNull(n);
 	}
 
 }
