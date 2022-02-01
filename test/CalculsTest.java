@@ -87,6 +87,7 @@ class CalculsTest {
 	        assertEquals(expectedResult, monCal.diviser(), "test en échec pour " + firstNumber + " / " + secondNumber + " != " + expectedResult); 	
 	}
 	
+	@Test
 	void testDiviserParZero() 
 	{
 			Calculs monCal = new Calculs(50, 0);
