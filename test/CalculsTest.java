@@ -30,6 +30,15 @@ class CalculsTest {
             Arguments.of(6,6,12),
             Arguments.of(3,2,5)
         );
+    } 
+    
+    static Stream<Arguments> chargerJeuDeTestSoustraire() throws Throwable 
+    {
+        return Stream.of(
+            Arguments.of(2,2,0),
+            Arguments.of(7,6,1),
+            Arguments.of(3,2,1)
+        );
     }
     
     
@@ -43,6 +52,13 @@ class CalculsTest {
 	}
 	
 	
+	@ParameterizedTest(name="Soustraire numéro {index}: nombre1={0}, nombre2={1}, résultat attendu = {2}")
+	@MethodSource("chargerJeuDeTestSoustraire")
+	void testSoustraire(int firstNumber, int secondNumber, int expectedResult) 
+	{
+	        Calculs monCal = new Calculs(firstNumber, secondNumber);
+	        assertEquals(expectedResult, monCal.soustraire(), "test en échec pour " + firstNumber + " - " + secondNumber + " != " + expectedResult); 
+	}
 	
 
 	@ParameterizedTest(name="Multiplication numéro {index}: nombre1={0}, nombre2={1}, résultat attendu = {2}")
